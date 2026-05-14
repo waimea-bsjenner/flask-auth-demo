@@ -30,10 +30,26 @@ class UserTable:
     """
 
     SEED_DATA = """
-        
+        INSERT INTO 
     """
 
-# Add more table classes here...
+class MessageTable:
+
+    NAME = "messages"
+
+    SCHEMA = """
+        CREATE TABLE messages (
+            id       INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            title TEXT NOT NULL,
+            body TEXT NOT NULL
+        )
+    """
+
+    SEED_DATA = """
+        INSERT INTO messages (user_id, title, body)
+        VALUES (1, "Hello world", "I have 5000000 power in rise of kingdoms)
+    """
 
 
 
@@ -54,6 +70,6 @@ class UserTable:
 
 TABLES = [
     UserTable,
-    # Add more tables here...
+    MessageTable
 ]
 
