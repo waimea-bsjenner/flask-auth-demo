@@ -4,21 +4,41 @@
 ===========================================================*/
 
 :root {
-    --text-col:         #244;
+    --base-col:         rgb(139, 13, 13);
+    --accent-col:       #f00;
 
-    --back-col:         #dff;
-    --back-col-dark:    #bdd;
+    --base-col-light:                      color-mix(in srgb, var(--base-col), #fff 20%);
+    --base-col-lightnerds:                 color-mix(in srgb, var(--base-col), #fff 50%);
+    --base-col-dark:                       color-mix(in srgb, var(--base-col), #000 20%);
+    --base-col-dark-dark-yet-darker-still: color-mix(in srgb, var(--base-col), #000 50%);
 
-    --border-col:       #355;
+    --text-col:         var(--base-col-light);
+    --text-col-inv:     var(--base-col-dark);
 
-    --accent-col:       #e43;
+    --page-bg:          var(--base-col-dark-dark-yet-darker-still);
+
+    --panel-bg:         var(--base-col-dark);
+
+    --border-col:       var(--base-col-dark);
+
+    --link-col:         var(--accent-col);
+
+    --button-bg:        var(--accent-col);
+    --button-col:       var(--text-col-inv);
+
+    --padding:          1rem;
+    --padding-sm:       0.5rem;
+
+    --gap:              1rem;
+
+    --content-width:    60rem;
 }
 
 
 /* Overall Layout -----------------------------------------------*/
 
 html {
-    background-color: var(--back-col);
+    background-color: var(--page-bg);
     color: var(--text-col);
 
     font-family: system-ui, sans-serif;
@@ -31,9 +51,9 @@ body {
 
 
 main {
-    max-width: 60rem;
+    max-width: var(--content-width);
     margin-inline: auto;
-    padding: 1rem;
+    padding: var(--padding);
 }
 
 
@@ -43,7 +63,7 @@ body > header {
     display: flex;
     gap: 1rem;
     align-items: center;
-    padding: 1rem;
+    padding: var(--padding);
 
     .logo {
         width: 2rem;
@@ -84,7 +104,7 @@ main > h2 {
 
 /* Creature List --------------------------------------------------*/
 
-#creatures {
+#messages {
     display: grid;
     gap: 2rem;
     grid-template-columns: 1fr;
@@ -97,7 +117,7 @@ main > h2 {
         grid-template-columns: 1fr 1fr 1fr;
     }
 
-    .creature {
+    .message {
         padding: 1rem;
 
         background-color: var(--back-col-dark);

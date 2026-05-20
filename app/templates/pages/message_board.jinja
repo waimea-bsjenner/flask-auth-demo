@@ -7,20 +7,20 @@
 
 {% block content %}
 
-    <h2>List of Creatures</h2>
+    <h2>Messages</h2>
 
-    <section id="creatures">
+    <section id="messages">
 
-        {% for creature in creatures %}
+        {% for messagee in messages %}
 
-            <div class="creature">
-                <h3>{{ creature.name }}</h3>
-                <p>Species: <strong>{{ creature.species }}</strong></p>
+            <div class="message">
+                <h3>{{ message.title }}</h3>
+                <p>{{ message.body }}</p>
             </div>
 
         {% else %}
 
-            <p>No Creatures!</p>
+            <p>No Messages!</p>
 
         {% endfor %}
 

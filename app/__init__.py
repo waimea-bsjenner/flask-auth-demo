@@ -110,27 +110,55 @@ def login_user():
         return redirect("/")
 
 #-----------------------------------------------------------
-# @login_required decorator
+# Logout route
 #-----------------------------------------------------------
-@app.get("/admin")
+@app.get("/logout")
+def logout_admin():
+    session.clear()
+    flash(f"You have been logged out","succes")
+    return redirect("/")
+
+#-----------------------------------------------------------
+# New message form
+#-----------------------------------------------------------
+@app.get("/message_form")
 @login_required
-def admin_page():
-        
+def new_message():
+    return render_template("pages/message_form.jinja")
+
+#-----------------------------------------------------------
+# new message post
+#-----------------------------------------------------------
+@app.post("/message")
+def send_message():
+    title = request.form.get('title','').strip()
+    body = request.form.get('body','').strip()
+
+    with connect_db() as db:
+        sql = """
+            INSERT INTO msesages (user_id, title, body)
+            VALUES (?, ?, ?)
+        """
+        params = (session.get("user")["user_id"], title, body)
+        db.execute(sql, params)
+
+        flash("Account created. Please login","success")
+        return redirect("/user/login")
 
 #-----------------------------------------------------------
 # Creature list page - Show all the creatures
 #-----------------------------------------------------------
-@app.get("/creatures")
-def show_all_creatures():
+@app.get("/message_board")
+def show_messages():
     with connect_db() as db:
         sql = """
-            SELECT id, species, name
-            FROM creatures
+            SELECT user_id, title, body
+            FROM messages
         """
         params = ()
-        creatures = db.execute(sql, params).fetchall()
+        messages = db.execute(sql, params).fetchall()
 
-        return render_template("pages/creature_list.jinja", creatures=creatures)
+        return render_template("pages/creature_list.jinja", messages=messages)
 
 
 #-----------------------------------------------------------
