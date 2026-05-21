@@ -104,6 +104,7 @@ def login_user():
             "username": username,
             "forename": user["forename"],
             "surname": user["surname"],
+            "id": user["id"]
         }
 
         flash("Login successful", "success")
@@ -133,20 +134,21 @@ def new_message():
 def send_message():
     title = request.form.get('title','').strip()
     body = request.form.get('body','').strip()
+    user_id = session["user"]["id"]
 
     with connect_db() as db:
         sql = """
-            INSERT INTO msesages (user_id, title, body)
+            INSERT INTO messages (user_id, title, body)
             VALUES (?, ?, ?)
         """
-        params = (session.get("user")["user_id"], title, body)
+        params = (user_id, title, body)
         db.execute(sql, params)
 
-        flash("Account created. Please login","success")
-        return redirect("/user/login")
+        flash("Message created","success")
+        return redirect("/message_board")
 
 #-----------------------------------------------------------
-# Creature list page - Show all the creatures
+# Message board page - shows all the messages
 #-----------------------------------------------------------
 @app.get("/message_board")
 def show_messages():
@@ -158,7 +160,7 @@ def show_messages():
         params = ()
         messages = db.execute(sql, params).fetchall()
 
-        return render_template("pages/creature_list.jinja", messages=messages)
+        return render_template("pages/message_board.jinja", messages=messages)
 
 
 #-----------------------------------------------------------

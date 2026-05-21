@@ -30,7 +30,7 @@ class UserTable:
     """
 
     SEED_DATA = """
-        INSERT INTO 
+
     """
 
 class MessageTable:
@@ -47,8 +47,7 @@ class MessageTable:
     """
 
     SEED_DATA = """
-        INSERT INTO messages (user_id, title, body)
-        VALUES (1, "Hello world", "I have 5000000 power in rise of kingdoms")
+
     """
 
 
