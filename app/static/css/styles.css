@@ -4,7 +4,7 @@
 ===========================================================*/
 
 :root {
-    --base-col:         rgb(139, 13, 13);
+    --base-col:         rgb(189, 3, 3);
     --accent-col:       #f00;
 
     --base-col-light:                      color-mix(in srgb, var(--base-col), #fff 20%);
@@ -18,18 +18,26 @@
     --page-bg:          var(--base-col-dark-dark-yet-darker-still);
 
     --panel-bg:         var(--base-col-dark);
+    --panel-header-bg:  var(--base-col-dark);
 
     --border-col:       var(--base-col-dark);
+
+    --drop-shadow:      0 0.25rem 1rem #0004;
 
     --link-col:         var(--accent-col);
 
     --button-bg:        var(--accent-col);
     --button-col:       var(--text-col-inv);
+    --button-shadow:    0 0.1rem 0.2rem #0004;
+    --button-shadow-up: 0 0.2rem 0.3rem #0008;
 
+    --padding-lg:       2rem;
     --padding:          1rem;
     --padding-sm:       0.5rem;
 
+    --gap-lg:           2rem;
     --gap:              1rem;
+    --gap-sm:           0.5rem;
 
     --content-width:    60rem;
 }
@@ -102,7 +110,7 @@ main > h2 {
 }
 
 
-/* Creature List --------------------------------------------------*/
+/* Flash messages --------------------------------------------------*/
 
 #messages {
     display: grid;
@@ -126,6 +134,51 @@ main > h2 {
 
         h3 {
             color: var(--accent-col);
+        }
+    }
+}
+
+/* Message Board -----------------------------------------------------------*/
+
+#message-list {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: 1fr;
+    margin-block: var(--gap-lg);
+
+    .message-item {
+        background-color: var(--panel-bg);
+        border: 3px solid var(--border-col);
+        border-radius: 0.5rem;
+        box-shadow: var(--drop-shadow);
+        overflow: hidden;
+
+        header {
+            background-color: var(--panel-header-bg);
+            border-bottom: 3px solid var(--border-col);
+            padding: var(--padding-sm) var(--padding);
+
+            h3 {
+                font-size: 1.5rem;
+                color: var(--text-col-inv);
+            }
+        }
+
+        .message-body {
+            padding: var(--padding);
+        }
+
+        footer {
+            padding: var(--padding);
+            display: flex;
+            gap: var(--gap);
+            align-items: center;
+            font-size: 0.8rem;
+
+            .author {
+                text-align: right;
+                flex: 1;
+            }
         }
     }
 }

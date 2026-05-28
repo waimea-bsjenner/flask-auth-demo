@@ -93,11 +93,11 @@ def login_user():
 
         if not user:
             flash(f"Unknown user", "error")
-            return redirect("/login")
+            return redirect("/user/login")
         
         if not check_password_hash(user["password_hash"], password):
             flash(f"Incorrect password", "error")
-            return redirect("/login")
+            return redirect("/user/login")
         
         session["logged_in"] = True
         session["user"] = {
@@ -162,7 +162,26 @@ def show_messages():
 
         return render_template("pages/message_board.jinja", messages=messages)
 
+#-----------------------------------------------------------
+# edit message page
+#-----------------------------------------------------------
+@app.get("/message/<int:id>/edit")
+@login_required
+def show_edit_message_form(id):
 
+    with connect_db() as db:
+        sql = """
+            SELECT id, title, body, user_id FROM messages WHERE id=?
+        """
+        params = (id,)
+        message = db.execute(sql, params)
+
+        if message and message["user_id"] == session["user"]["id"]:
+            return render_template("pages/message_edit_form.jinja", message=message)
+
+        flash("Invalid message", "error")
+        return redirect("/messages")
+    
 #-----------------------------------------------------------
 # Help page - Show some help
 #-----------------------------------------------------------

@@ -9,15 +9,25 @@
 
     <h2>Messages</h2>
 
-    <section id="messages">
+    <section id="message-list">
 
         {% for message in messages %}
 
-            <div class="message">
+            <div class="message-item">
                 <h3>{{ message.title }}</h3>
-                <p>{{ message.body }}</p>
+
+                <p class="message-body">{{ message.body }}</p>
             </div>
 
+            {% if session.logged_in and message.uid == session.user.id %}
+                <a
+                    class="button"
+                    title="Edit message"
+                    href="/message/{{ message.mid }}/edit"
+                >
+                    <i data-lucide="pen"></i>
+                </a>
+            {% endif %}
         {% else %}
 
             <p>No Messages!</p>
